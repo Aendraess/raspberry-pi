@@ -1,7 +1,6 @@
 package database
 
 import (
-	"api/models"
 	"log"
 
 	"gorm.io/driver/sqlite" // SQLite driver for GORM
@@ -21,10 +20,7 @@ func InitDB() {
 	DB = DB.Set("gorm:query_option", "WHERE deleted_at IS NULL")
 
 	// Auto migrate the User model
-	err = DB.AutoMigrate(&models.User{})
-	if err != nil {
-		log.Fatal("Failed to auto migrate database:", err)
-	}
+	migrateDb()
 
 	log.Println("Database connected and migrated successfully")
 }
