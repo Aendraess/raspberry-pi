@@ -59,4 +59,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }} # optional
           
           scp: |
-            api => /home/${{ vars.SSH_USER }}/api
+            api => /home/${{ vars.SSH_USER }}/api_prod
