@@ -18,8 +18,6 @@ func InitalizeServer() {
 	// Add CORS middleware
 	App.Use(cors.New(cors.Config{
 		AllowOrigins: "*", // Allows all origins
-		AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
-		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 	database.InitDB()
 	SetupRoutes(App)
