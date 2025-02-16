@@ -8,10 +8,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func RegisterRoutes() {
+type UserController struct{}
+
+func (uc *UserController) RegisterRoutes() {
 	group := server.App.Group("/users")
-	group.Post("/", CreateUser)
-	group.Get("/", GetUsers)
+	group.Post("/", uc.CreateUser)
+	group.Get("/", uc.GetUsers)
 }
 
 // @Summary Get a list of users
@@ -19,7 +21,7 @@ func RegisterRoutes() {
 // @Produce json
 // @Success 200 {array} models.User
 // @Router /users [get]
-func GetUsers(c *fiber.Ctx) error {
+func (uc *UserController) GetUsers(c *fiber.Ctx) error {
 	var users []models.User
 
 	database.DB.Find(&users)
@@ -33,7 +35,7 @@ func GetUsers(c *fiber.Ctx) error {
 // @Param user body models.User true "User object"
 // @Success 200 {object} models.User
 // @Router /users [post]
-func CreateUser(c *fiber.Ctx) error {
+func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 	var user models.User
 	// Parse the request body into the User struct
 	if err := c.BodyParser(&user); err != nil {

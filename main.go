@@ -3,6 +3,7 @@ package main
 import (
 	"api/database"
 	_ "api/docs"
+	"api/routes"
 	"api/server"
 )
 
@@ -15,4 +16,5 @@ func main() {
 	// Initialize the database
 	database.InitDB()
 	server.InitalizeServer()
+	routes.SetupRoutes()
 }
