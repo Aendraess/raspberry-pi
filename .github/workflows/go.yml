@@ -41,15 +41,22 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: myapp
-
-      - name: Deploy to Raspberry Pi
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ vars.SSH_USER }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_PORT: ${{ vars.SSH_PORT || '22' }}
+      - name: Set up SSH key
         run: |
-          echo "$SSH_KEY" > ~/.ssh/private_key && chmod 600 ~/.ssh/private_key
-          ls -l
-          scp -P $SSH_PORT -i ~/.ssh/private_key api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
-          ssh -p $SSH_PORT -i ~/.ssh/private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/api && sudo systemctl restart goapi.service"
+          env
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 22 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          sudo apt-get install sshpass
+
+      - name: ssh-scp-ssh-pipelines
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: 22 # optional, default is 22
+          user: andreas
+          key: ${{ secrets.SSH_KEY }} # optional
+          
+          scp: |
+            api => /home/${{ vars.SSH_USER }}/api
