@@ -10,7 +10,7 @@ import (
 
 type UserController struct{}
 
-func (uc *UserController) RegisterRoutes(app *fiber.App) {
+func (uc *UserController) RegisterRoutes(app fiber.Router) {
 	log.Println("Setting up user logs...")
 	group := app.Group("/users")
 	group.Post("/", uc.CreateUser)
