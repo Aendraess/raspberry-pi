@@ -19,12 +19,9 @@ jobs:
 
       - name: Create Folder
         run: mkdir myapp
-      - name: Configure cross-compiler
-        run: |
-          cd /usr/local/go/src
-          sudo GOOS=linux GOARCH=arm ./make.bash --no-clean
+        
       - name: Build
-        run: GOARCH=ARM GOOS=linux go build -o myapp ./...
+        run: GOARCH=arm64 GOOS=linux go build -o myapp ./...
 
       - name: Test
         run: go test -v ./...
