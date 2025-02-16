@@ -49,7 +49,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_PORT: ${{ vars.SSH_PORT || '22' }}
         run: |
-          echo "$SSH_KEY" > private_key && chmod 600 private_key
+          echo "$SSH_KEY" > ~/.ssh/private_key && chmod 600 ~/.ssh/private_key
           ls -l
-          scp -P $SSH_PORT -i private_key -o UserKnownHostsFile=/github/home/.ssh/known_hosts api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
-          ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/api && sudo systemctl restart goapi.service"
+          scp -P $SSH_PORT -i ~/.ssh/private_key api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
+          ssh -p $SSH_PORT -i ~/.ssh/private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/api && sudo systemctl restart goapi.service"
