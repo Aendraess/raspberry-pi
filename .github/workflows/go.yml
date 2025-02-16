@@ -1,0 +1,50 @@
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: Build
+        run: go build -o myapp ./...
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: myapp
+          path: myapp
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: myapp
+
+      - name: Deploy to Raspberry Pi
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+        run: |
+          echo "$SSH_KEY" > private_key && chmod 600 private_key
+          scp -P $SSH_PORT -i private_key myapp $SSH_USER@$SSH_HOST:/home/$SSH_USER/myapp
+          ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/myapp && sudo systemctl restart myapp.service"
