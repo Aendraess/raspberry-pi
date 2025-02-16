@@ -1,8 +1,8 @@
 package server
 
 import (
+	"api/controllers"
 	"api/database"
-	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -22,11 +22,19 @@ func InitalizeServer() {
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 	database.InitDB()
-
+	SetupRoutes(App)
 	// Serve Swagger UI
 	App.Get("/swagger/*", fiberSwagger.WrapHandler)
-
-	// Start the server
-	log.Println("Server running and listening on port: 8081")
 	App.Listen(":8081")
+}
+
+// SetupRoutes automatically registers controllers
+func SetupRoutes(app *fiber.App) {
+	controllersList := []controllers.Controller{
+		&controllers.UserController{},
+	}
+
+	for _, controller := range controllersList {
+		controller.RegisterRoutes(app)
+	}
 }

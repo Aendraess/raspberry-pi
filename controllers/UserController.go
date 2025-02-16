@@ -3,15 +3,14 @@ package controllers
 import (
 	"api/database"
 	"api/models"
-	"api/server"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 type UserController struct{}
 
-func (uc *UserController) RegisterRoutes() {
-	group := server.App.Group("/users")
+func (uc *UserController) RegisterRoutes(app *fiber.App) {
+	group := app.Group("/users")
 	group.Post("/", uc.CreateUser)
 	group.Get("/", uc.GetUsers)
 }
