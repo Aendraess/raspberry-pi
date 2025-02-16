@@ -3,7 +3,7 @@ package server
 import (
 	"api/controllers"
 	"api/database"
-
+	"log"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
@@ -23,6 +23,13 @@ func InitalizeServer() {
 	SetupRoutes(App)
 	// Serve Swagger UI
 	App.Get("/swagger/*", fiberSwagger.WrapHandler)
+	log.Println("Registered Routes:")
+	for _, route := range App.Stack() {
+		for _, r := range route {
+			log.Printf("%s %s", r.Method, r.Path)
+		}
+	}
+
 	App.Listen(":8081")
 }
 
