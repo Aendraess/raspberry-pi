@@ -52,5 +52,5 @@ jobs:
         run: |
           echo "$SSH_KEY" > private_key && chmod 600 private_key
           ls -l
-          scp -P $SSH_PORT -i private_key api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
+          scp -P $SSH_PORT -i private_key -o UserKnownHostsFile=/github/home/.ssh/known_hosts api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
           ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/api && sudo systemctl restart goapi.service"
