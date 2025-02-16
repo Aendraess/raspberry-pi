@@ -10,3 +10,4 @@ erpi2
 erpi2.pub
 main.exe
 api.exe
+.env.development

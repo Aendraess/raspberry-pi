@@ -49,5 +49,5 @@ jobs:
           SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
         run: |
           echo "$SSH_KEY" > private_key && chmod 600 private_key
-          scp -P $SSH_PORT -i private_key myapp $SSH_USER@$SSH_HOST:/home/$SSH_USER/myapp
+          scp -P $SSH_PORT -i private_key myapp/* $SSH_USER@$SSH_HOST:/home/$SSH_USER/myapp
           ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/myapp && sudo systemctl restart myapp.service"
