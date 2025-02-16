@@ -3,6 +3,7 @@ package controllers
 import (
 	"api/database"
 	"api/models"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,6 +11,7 @@ import (
 type UserController struct{}
 
 func (uc *UserController) RegisterRoutes(app *fiber.App) {
+	log.Println("Setting up user logs...")
 	group := app.Group("/users")
 	group.Post("/", uc.CreateUser)
 	group.Get("/", uc.GetUsers)
