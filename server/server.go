@@ -3,18 +3,42 @@ package server
 import (
 	"api/controllers"
 	"api/database"
+	"os"
 	"log"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
+	"github.com/swaggo/swag"
 )
 
 var App *fiber.App
+var Port = ""
+var SwaggerInfo = &swag.Spec{
+	Version:          "1.0",
+	Title:            "User API",
+	Description:      "This is a sample API for managing users.",
+	Host:            "",
+	BasePath:         "/",
+	Schemes:          []string{"http"},
+	InfoInstanceName: "swagger",
+}
 
+// InitializeSwagger sets up Swagger with a dynamic host.
+func InitializeSwagger() {
+	port := os.Getenv("GOPORT")
+	log.Println("PORT: ",port)
+	if port == "" {
+		port = "8080"
+	}
+	Port = port
+	SwaggerInfo.Host = fmt.Sprintf("localhost:%s", port)
+	swag.Register(SwaggerInfo.InfoInstanceName, SwaggerInfo)
+}
 func InitalizeServer() {
 	// Create a new Fiber app
 	App = fiber.New()
-
+	InitializeSwagger()
 	// Add CORS middleware
 	App.Use(cors.New(cors.Config{
 		AllowOrigins: "*", // Allows all origins
@@ -30,7 +54,7 @@ func InitalizeServer() {
 		}
 	}
 
-	App.Listen(":8081")
+	App.Listen(":"+Port)
 }
 
 // SetupRoutes automatically registers controllers
