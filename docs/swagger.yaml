@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  main.User:
+  models.User:
     properties:
       createdAt:
         type: string
@@ -9,6 +9,8 @@ definitions:
       id:
         type: integer
       name:
+        type: string
+      phoneNumber:
         type: string
       updatedAt:
         type: string
@@ -30,7 +32,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/main.User'
+              $ref: '#/definitions/models.User'
             type: array
       summary: Get a list of users
     post:
@@ -43,13 +45,13 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/main.User'
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.User'
+            $ref: '#/definitions/models.User'
       summary: Create a new user
 swagger: "2.0"

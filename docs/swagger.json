@@ -22,7 +22,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/main.User"
+                                "$ref": "#/definitions/models.User"
                             }
                         }
                     }
@@ -44,7 +44,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 ],
@@ -52,7 +52,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
@@ -60,7 +60,7 @@
         }
     },
     "definitions": {
-        "main.User": {
+        "models.User": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -73,6 +73,9 @@
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
                     "type": "string"
                 },
                 "updatedAt": {

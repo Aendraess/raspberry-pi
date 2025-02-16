@@ -28,7 +28,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/main.User"
+                                "$ref": "#/definitions/models.User"
                             }
                         }
                     }
@@ -50,7 +50,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 ],
@@ -58,7 +58,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 }
@@ -66,7 +66,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.User": {
+        "models.User": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -79,6 +79,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
                     "type": "string"
                 },
                 "updatedAt": {

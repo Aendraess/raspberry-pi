@@ -15,12 +15,17 @@ func InitalizeServer() {
 	App = fiber.New()
 
 	// Add CORS middleware
-	App.Use(cors.New())
+	App.Use(cors.New(cors.Config{
+    AllowOrigins: "*", // Allows all origins
+    AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS",
+    AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+}))
+
 
 	// Serve Swagger UI
 	App.Get("/swagger/*", fiberSwagger.WrapHandler)
 
 	// Start the server
-	log.Println("Server running and listening on port: 8080")
-	App.Listen(":8080")
+	log.Println("Server running and listening on port: 8081")
+	App.Listen(":8081")
 }
