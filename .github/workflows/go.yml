@@ -50,5 +50,5 @@ jobs:
         run: |
           echo "$SSH_KEY" > private_key && chmod 600 private_key
           ls -l
-          scp -P $SSH_PORT -i private_key myapp/* $SSH_USER@$SSH_HOST:/home/$SSH_USER/myapp
-          ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/myapp && sudo systemctl restart myapp.service"
+          scp -P $SSH_PORT -i private_key api $SSH_USER@$SSH_HOST:/home/$SSH_USER/api
+          ssh -p $SSH_PORT -i private_key $SSH_USER@$SSH_HOST "chmod +x /home/$SSH_USER/api && sudo systemctl restart goapi.service"
