@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   models.User:
     properties:
@@ -15,12 +14,8 @@ definitions:
       updatedAt:
         type: string
     type: object
-host: localhost:{{.PORT}}
 info:
   contact: {}
-  description: This is a sample API for managing users.
-  title: User API
-  version: "1.0"
 paths:
   /users:
     get:

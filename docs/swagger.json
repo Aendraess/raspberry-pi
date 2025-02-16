@@ -1,13 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample API for managing users.",
-        "title": "User API",
-        "contact": {},
-        "version": "1.0"
+        "contact": {}
     },
-    "host": "localhost:{{.PORT}}",
-    "basePath": "/",
     "paths": {
         "/users": {
             "get": {
