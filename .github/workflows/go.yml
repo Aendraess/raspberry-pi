@@ -35,7 +35,6 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment: production
     
     steps:
       - name: Download Artifact
@@ -46,9 +45,9 @@ jobs:
       - name: Deploy to Raspberry Pi
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_USER: ${{ vars.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+          SSH_PORT: ${{ vars.SSH_PORT || '22' }}
         run: |
           echo "$SSH_KEY" > private_key && chmod 600 private_key
           ls -l
