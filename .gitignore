@@ -1,6 +1,16 @@
 database.db
 */**/database.db
 */database.db
+<<<<<<< HEAD
 database/database.db
 docx/**/*
 docx
+=======
+<<<<<<< HEAD
+database/database.db
+=======
+database/database.db
+erpi2
+erpi2.pub
+>>>>>>> 975641e (.)
+>>>>>>> 43b57e1 (s:)
