@@ -88,8 +88,8 @@ jobs:
           first_ssh: |
             sudo systemctl stop goapi.service
           scp: |
-            api => /home/${{ vars.SSH_USER }}/api_prod/myapp
-            swagger-docs/ => /home/${{ vars.SSH_USER }}/api_prod/docs
+            api => /home/${{ vars.SSH_USER }}/api_prod
+            swagger-docs/* => /home/${{ vars.SSH_USER }}/api_prod/docs
           last_ssh: |
             sudo systemctl start goapi.service
             sudo systemctl restart goapi.service
