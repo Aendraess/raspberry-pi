@@ -65,8 +65,10 @@ jobs:
           port: 22 # optional, default is 22
           user: andreas
           key: ${{ secrets.SSH_KEY }} # optional
-          
+          first_ssh: |
+            sudo systemctl stop goapi.service
           scp: |
             api => /home/${{ vars.SSH_USER }}/api_prod
           last_ssh: |
+            sudo systemctl start goapi.service
             sudo systemctl restart goapi.service
