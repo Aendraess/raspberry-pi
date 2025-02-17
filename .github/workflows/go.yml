@@ -70,5 +70,6 @@ jobs:
           scp: |
             api => /home/${{ vars.SSH_USER }}/api_prod
           last_ssh: |
+            echo "GOPORT=${{ vars.GOPORT }}" >> .env
             sudo systemctl start goapi.service
             sudo systemctl restart goapi.service
