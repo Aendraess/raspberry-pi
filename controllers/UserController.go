@@ -20,6 +20,7 @@ func (uc *UserController) RegisterRoutes(app fiber.Router) {
 // @Summary Get a list of users
 // @Description Get a list of all users
 // @Produce json
+// @Tags User
 // @Success 200 {array} models.User
 // @Router /api/users [get]
 func (uc *UserController) GetUsers(c *fiber.Ctx) error {
@@ -33,8 +34,9 @@ func (uc *UserController) GetUsers(c *fiber.Ctx) error {
 // @Description Create a new user with the given name
 // @Accept json
 // @Produce json
-// @Param user body models.User true "User object"
-// @Success 200 {object} models.User
+// @Tags User
+// @Param user body dtos.CreateUserRequest true "User object"
+// @Success 200 {object} dtos.UserResponse
 // @Router /api/users [post]
 func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 	var user models.User
@@ -46,6 +48,39 @@ func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 	}
 
 	database.DB.Create(&user)
+
+	return c.JSON(user)
+}
+
+// @Summary Update a user
+// @Description Update an existing user by ID
+// @Accept json
+// @Produce json
+// @Tags User
+// @Param id path int true "User ID"
+// @Param user body dtos.UpdateUserRequest true "Updated user object"
+// @Success 200 {object} dtos.UserResponse
+// @Failure 400 {object} fiber.Map "Bad Request"
+// @Failure 404 {object} fiber.Map "User Not Found"
+// @Router /api/users/{id} [put]
+func (uc *UserController) UpdateUser(c *fiber.Ctx) error {
+	id := c.Params("id")
+	var user models.User
+
+	if err := database.DB.First(&user, id).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "User not found",
+		})
+	}
+
+	var updateData models.User
+	if err := c.BodyParser(&updateData); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Cannot parse JSON",
+		})
+	}
+
+	database.DB.Model(&user).Updates(updateData)
 
 	return c.JSON(user)
 }
