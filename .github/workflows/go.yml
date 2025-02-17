@@ -19,6 +19,12 @@ jobs:
 
       - name: Create Folder
         run: mkdir myapp
+
+      - name: Install Dependencies for Cross-compilation (ARM64)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqlite3-dev gcc-aarch64-linux-gnu libc6-dev-arm64-cross
+
         
       - name: Build
         run: CGO_ENABLED=1 GOARCH=arm64 GOOS=linux go build -o myapp ./...
