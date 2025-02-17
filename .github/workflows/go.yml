@@ -60,3 +60,5 @@ jobs:
           
           scp: |
             api => /home/${{ vars.SSH_USER }}/api_prod
+          last_ssh: |
+            sudo systemctl restart goapi.service
