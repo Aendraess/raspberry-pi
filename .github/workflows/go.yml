@@ -24,7 +24,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libsqlite3-dev gcc-aarch64-linux-gnu libc6-dev-arm64-cross
-          
+          dpkg -L gcc-aarch64-linux-gnu
         
       - name: Build
         run: |
