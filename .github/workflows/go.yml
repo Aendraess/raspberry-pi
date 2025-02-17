@@ -93,7 +93,9 @@ jobs:
             sudo systemctl stop goapi.service
           scp: |
             api => /home/${{ vars.SSH_USER }}/api_prod
-            swagger-docs/* => /home/${{ vars.SSH_USER }}/api_prod/docs
+            docs.go => /home/${{ vars.SSH_USER }}/api_prod/docs
+            swagger.json => /home/${{ vars.SSH_USER }}/api_prod/docs
+            swagger.yaml => /home/${{ vars.SSH_USER }}/api_prod/docs
           last_ssh: |
             sudo systemctl start goapi.service
             sudo systemctl restart goapi.service
