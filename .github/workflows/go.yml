@@ -26,6 +26,14 @@ jobs:
           sudo apt-get install -y libsqlite3-dev gcc-aarch64-linux-gnu libc6-dev-arm64-cross
           dpkg -L gcc-aarch64-linux-gnu
         
+      - name: Install Swag CLI
+        run: |
+          go install github.com/swaggo/swag/cmd/swag@latest
+
+      - name: Run swag init to generate docs
+        run: |
+          swag init -g main.go
+
       - name: Build
         run: |
           export PATH=$PATH:/usr/bin/aarch64-linux-gnu-gcc
@@ -40,6 +48,12 @@ jobs:
           name: myapp
           path: myapp
 
+      - name: Upload Swagger Docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: swagger-docs
+          path: docs/
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -49,6 +63,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: myapp
+
+      - name: Download Swagger Docs
+        uses: actions/download-artifact@v4
+        with:
+          name: swagger-docs
+
       - name: Set up SSH key
         run: |
           env
@@ -68,8 +88,8 @@ jobs:
           first_ssh: |
             sudo systemctl stop goapi.service
           scp: |
-            api => /home/${{ vars.SSH_USER }}/api_prod
+            api => /home/${{ vars.SSH_USER }}/api_prod/myapp
+            swagger-docs/ => /home/${{ vars.SSH_USER }}/api_prod/docs
           last_ssh: |
-            swag init
             sudo systemctl start goapi.service
             sudo systemctl restart goapi.service
