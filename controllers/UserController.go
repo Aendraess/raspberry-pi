@@ -21,7 +21,7 @@ func (uc *UserController) RegisterRoutes(app fiber.Router) {
 // @Description Get a list of all users
 // @Produce json
 // @Success 200 {array} models.User
-// @Router /api/users [get]
+// @Router /users [get]
 func (uc *UserController) GetUsers(c *fiber.Ctx) error {
 	var users []models.User
 
@@ -35,7 +35,7 @@ func (uc *UserController) GetUsers(c *fiber.Ctx) error {
 // @Produce json
 // @Param user body models.User true "User object"
 // @Success 200 {object} models.User
-// @Router /api/users [post]
+// @Router /users [post]
 func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 	var user models.User
 	// Parse the request body into the User struct
