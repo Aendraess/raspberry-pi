@@ -17,8 +17,6 @@ func (mc *MarketItemController) RegisterRoutes(app fiber.Router) {
 	group.Get("/", mc.GetMarketItems)
 	group.Delete("/", mc.DeleteMarketItem)
 	group.Put("/", mc.UpdateMarketItem)
-	group.Get("/category", mc.GetMarketCategories)
-	group.Post("/category", mc.CreateMarketCategory)
 
 }
 
@@ -35,20 +33,6 @@ func (uc *MarketItemController) GetMarketItems(c *fiber.Ctx) error {
 	return c.JSON(marketItems)
 }
 
-
-// @Summary Get a list of market categories
-// @Description Get a list of all market categories
-// @Produce json
-// @Tags MarketItem
-// @Success 200 {array} models.Category
-// @Router /api/marketItem/category [get]
-func (uc *MarketItemController) GetMarketCategories(c *fiber.Ctx) error {
-	var marketItems []models.MarketItem
-
-	database.DB.Find(&marketItems)
-	return c.JSON(marketItems)
-}
-
 // @Summary Create a new market item
 // @Description Create a new market item
 // @Accept json
@@ -58,28 +42,6 @@ func (uc *MarketItemController) GetMarketCategories(c *fiber.Ctx) error {
 // @Success 200 {object} models.MarketItem
 // @Router /api/marketItem [post]
 func (uc *MarketItemController) CreateMarketItem(c *fiber.Ctx) error {
-	var marketItem models.MarketItem
-	// Parse the request body into the User struct
-	if err := c.BodyParser(&marketItem); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Cannot parse JSON",
-		})
-	}
-
-	database.DB.Create(&marketItem)
-
-	return c.JSON(marketItem)
-}
-
-// @Summary Create a new market Category
-// @Description Create a new market Category
-// @Accept json
-// @Produce json
-// @Tags MarketItem
-// @Param user body dtos.CreateCategory true "MarketCategory object"
-// @Success 200 {object} models.Category
-// @Router /api/marketItem/Category [post]
-func (uc *MarketItemController) CreateMarketCategory(c *fiber.Ctx) error {
 	var marketItem models.MarketItem
 	// Parse the request body into the User struct
 	if err := c.BodyParser(&marketItem); err != nil {
