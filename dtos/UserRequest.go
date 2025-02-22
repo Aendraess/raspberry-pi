@@ -9,7 +9,6 @@ type CreateUserRequest struct {
 }
 
 type UpdateUserRequest struct {
-	id    int    `json:id`
 	Name  string `json:"name"`
 	Phone string `json:"phoneNumber"`
 	Email string `json:"email"`
