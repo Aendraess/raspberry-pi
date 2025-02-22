@@ -40,7 +40,7 @@ func (uc *MarketItemController) GetMarketItems(c *fiber.Ctx) error {
 // @Description Get a list of all market categories
 // @Produce json
 // @Tags MarketItem
-// @Success 200 {array} models.MarketCategory
+// @Success 200 {array} models.Category
 // @Router /api/marketItem/category [get]
 func (uc *MarketItemController) GetMarketCategories(c *fiber.Ctx) error {
 	var marketItems []models.MarketItem
@@ -77,7 +77,7 @@ func (uc *MarketItemController) CreateMarketItem(c *fiber.Ctx) error {
 // @Produce json
 // @Tags MarketItem
 // @Param user body dtos.CreateCategory true "MarketCategory object"
-// @Success 200 {object} models.MarketCategory
+// @Success 200 {object} models.Category
 // @Router /api/marketItem/Category [post]
 func (uc *MarketItemController) CreateMarketCategory(c *fiber.Ctx) error {
 	var marketItem models.MarketItem
