@@ -60,8 +60,6 @@ func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 // @Param id path int true "User ID"
 // @Param user body dtos.UpdateUserRequest true "Updated user object"
 // @Success 200 {object} dtos.UserResponse
-// @Failure 400 {object} fiber.Map "Bad Request"
-// @Failure 404 {object} fiber.Map "User Not Found"
 // @Router /api/users/{id} [put]
 func (uc *UserController) UpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")

@@ -56,7 +56,7 @@ func (uc *MarketItemController) GetMarketCategories(c *fiber.Ctx) error {
 // @Tags MarketItem
 // @Param user body dtos.CreateMarketItemRequest true "MarketItem object"
 // @Success 200 {object} models.MarketItem
-// @Router /api/users [post]
+// @Router /api/marketItem [post]
 func (uc *MarketItemController) CreateMarketItem(c *fiber.Ctx) error {
 	var marketItem models.MarketItem
 	// Parse the request body into the User struct
