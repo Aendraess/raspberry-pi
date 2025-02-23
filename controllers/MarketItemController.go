@@ -12,7 +12,7 @@ type MarketItemController struct{}
 
 func (mc *MarketItemController) RegisterRoutes(app fiber.Router) {
 	log.Println("Setting up user logs...")
-	group := app.Group("/marketItem")
+	group := app.Group("/marketitem")
 	group.Post("/", mc.CreateMarketItem)
 	group.Get("/", mc.GetMarketItems)
 	group.Delete("/", mc.DeleteMarketItem)

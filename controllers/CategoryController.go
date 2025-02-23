@@ -11,17 +11,16 @@ import (
 type CategoryController struct{}
 
 func (c *CategoryController) RegisterRoutes(app fiber.Router) {
-	log.Println("Setting up user logs...")
+	log.Println("Setting up category logs...")
 	group := app.Group("/category")
 	group.Get("/", c.GetCategories)
 	group.Post("/", c.CreateCategory)
-
 }
 
 // @Summary Get a list of market categories
 // @Description Get a list of all market categories
 // @Produce json
-// @Tags MarketItem
+// @Tags Category
 // @Success 200 {array} models.Category
 // @Router /api/category [get]
 func (uc *CategoryController) GetCategories(c *fiber.Ctx) error {
@@ -35,7 +34,7 @@ func (uc *CategoryController) GetCategories(c *fiber.Ctx) error {
 // @Description Create a new market Category
 // @Accept json
 // @Produce json
-// @Tags MarketItem
+// @Tags Category
 // @Param user body dtos.CreateCategory true "MarketCategory object"
 // @Success 200 {object} models.Category
 // @Router /api/category [post]

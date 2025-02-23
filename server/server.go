@@ -57,6 +57,8 @@ func InitalizeServer() {
 func SetupRoutes(app *fiber.Router) {
 	controllersList := []controllers.Controller{
 		&controllers.UserController{},
+		&controllers.CategoryController{},
+		&controllers.MarketItemController{},
 	}
 
 	for _, controller := range controllersList {
