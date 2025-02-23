@@ -35,7 +35,7 @@ func (uc *ApiKeyController) GetApiKeys(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Tags ApiKey
-// @Param api_key body dtos.ApiKeyCreateRequest true "ApiKey object"
+// @Param api_key body dtos.CreateApiKeyRequest true "ApiKey object"
 // @Success 200 {object} models.ApiKey
 // @Router /api/api_key [post]
 func (uc *ApiKeyController) CreateApiKey(c *fiber.Ctx) error {
