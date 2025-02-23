@@ -47,7 +47,11 @@ func (uc *UserController) CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
-	database.DB.Create(&user)
+	if err := database.DB.Create(&user).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
 
 	return c.JSON(user)
 }
