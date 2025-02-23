@@ -59,6 +59,7 @@ func SetupRoutes(app *fiber.Router) {
 		&controllers.UserController{},
 		&controllers.CategoryController{},
 		&controllers.MarketItemController{},
+		&controllers.ApiKeyController{},
 	}
 
 	for _, controller := range controllersList {

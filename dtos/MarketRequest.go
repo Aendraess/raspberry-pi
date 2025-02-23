@@ -5,6 +5,7 @@ type CreateMarketItemRequest struct {
 	Price       float32 `json:"price"`
 	Title       string  `json:"title"`
 	CategoryId  uint    `json:"categoryId"`
+	UserId      uint    `json:"userId"`
 }
 
 type UpdateMarketItemRequest struct {
@@ -13,6 +14,7 @@ type UpdateMarketItemRequest struct {
 	Price       float32 `json:"price"`
 	Title       string  `json:"title"`
 	CategoryId  uint    `json:"categoryId"`
+	UserId      uint    `json:"userId"`
 }
 
 type CreateCategory struct {

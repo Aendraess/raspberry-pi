@@ -7,4 +7,6 @@ type MarketItem struct {
 	Title       string  `json:"title"`
 	CategoryId  uint
 	Category    Category `json:"category" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	UserId      uint
+	User        User `json:"user"     gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
