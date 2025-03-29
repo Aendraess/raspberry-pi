@@ -7,7 +7,7 @@ import (
 
 func migrateDb() {
 	err := DB.AutoMigrate(
-		&models.User{}, &models.ApiKey{}, &models.MarketItem{}, &models.Category{}, &models.BloodPressure{})
+		&models.User{}, &models.ApiKey{}, &models.MarketItem{}, &models.Category{}, &models.BloodPressure{}, &models.ModelUpdates{})
 	if err != nil {
 		log.Fatal("Failed to migrate, ", err)
 	}

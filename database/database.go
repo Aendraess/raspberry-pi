@@ -18,9 +18,14 @@ func InitDB() {
 	}
 
 	DB = DB.Set("gorm:query_option", "WHERE deleted_at IS NULL")
-
+	
+	
+	
 	// Auto migrate 
 	migrateDb()
+	
+	// Set up callbacks for tracking model updates
+	setupModelTracking()
 
 	log.Println("Database connected and migrated successfully")
 }
