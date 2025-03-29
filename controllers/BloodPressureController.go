@@ -48,7 +48,7 @@ func (uc *BloodPressureController) CreateBloodPressure(c *fiber.Ctx) error {
 		})
 	}
 	var BloodPressure = models.BloodPressure{
-		Systiolic: BloodPressureReport.Systiolic,
+		Systolic: BloodPressureReport.Systolic,
 		Diastolic: BloodPressureReport.Diastolic,
 		Pulse: BloodPressureReport.Pulse,
 		Medicine: BloodPressureReport.Medicine,
