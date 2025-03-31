@@ -1,0 +1,84 @@
+{
+    "@odata.etag": "\"6\"",
+    "ItemInternalId": "71",
+    "ID": 71,
+    "Title": "GP. Hököpinge. Skyltar.",
+    "Beskrivning": "1. Vm/Vv/Gtn 2. Text Vv 3. Age 4. Refl. 5. Stolpreflex 6. Kond 7. Just 8. Prio ",
+    "Ort": "-",
+    "kontrollerad": true,
+    "Fastighet": "Övrigt",
+    "Avvikelsetyp": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+        "Id": 4,
+        "Value": "Inventering"
+    },
+    "Avvikelsetyp#Id": 4,
+    "OData__x00c4_tatyp": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+        "Id": -1,
+        "Value": "Ej bestämd"
+    },
+    "OData__x00c4_tatyp#Id": -1,
+    "Material": [],
+    "Material@odata.type": "#Collection(Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference)",
+    "Material#Id": [],
+    "Material#Id@odata.type": "#Collection(Int64)",
+    "Latitud": "55.4506063",
+    "Longitud": "13.0205867",
+    "Namn": "Thomas Lindskog",
+    "Kan_x0020_avklaras": true,
+    "Status": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+        "Id": 0,
+        "Value": "Skapad"
+    },
+    "Status#Id": 0,
+    "Anv_x00e4_ndar_x002d_ID": 20,
+    "Google_x0020_Maps": "https://www.google.com/maps?q=55.4506063,13.0205867",
+    "Created": "2024-04-15T08:07:39Z",
+    "dubletter": false,
+    "datum_ok": true,
+    "fordon_hittat": false,
+    "Editor": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+        "Claims": "i:0#.f|membership|andreas.lofkvist@glnet.se",
+        "DisplayName": "Andreas Löfkvist",
+        "Email": "andreas.lofkvist@greenlandscaping.se",
+        "Picture": "https://greenlandscapingmalmo.sharepoint.com/sites/GLMalmAB-EgenkontrollerGPISSVeloa/_layouts/15/UserPhoto.aspx?Size=L&AccountName=andreas.lofkvist@greenlandscaping.se",
+        "Department": "GL Management Services AB",
+        "JobTitle": null
+    },
+    "Editor#Claims": "i:0#.f|membership|andreas.lofkvist@glnet.se",
+    "Modified": "2025-02-28T08:00:18Z",
+    "Beskrivning_2": "1. vm/vv/gtn 2. text vv 3. age 4. refl 5. stolpreflex 6. kond 7. just 8. prio ",
+    "Author": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+        "Claims": "i:0#.f|membership|thomas.lindskog@greenlandscaping.se",
+        "DisplayName": "Thomas Lindskog",
+        "Email": "thomas.lindskog@wiridis.se",
+        "Picture": "https://greenlandscapingmalmo.sharepoint.com/sites/GLMalmAB-EgenkontrollerGPISSVeloa/_layouts/15/UserPhoto.aspx?Size=L&AccountName=thomas.lindskog@wiridis.se",
+        "Department": "Wiridis AB",
+        "JobTitle": "Arbetsledare"
+    },
+    "Author#Claims": "i:0#.f|membership|thomas.lindskog@greenlandscaping.se",
+    "{Identifier}": "Lists%252fTA%2b%2bTillggsarbeten%252f71_.000",
+    "{IsFolder}": false,
+    "{Thumbnail}": {
+        "Large": null,
+        "Medium": null,
+        "Small": null
+    },
+    "{Link}": "https://greenlandscapingmalmo.sharepoint.com/sites/GLMalmAB-EgenkontrollerGPISSVeloa/_layouts/15/listform.aspx?PageType=4&ListId=1eed3852%2D3fe7%2D4ef4%2Db2f0%2Dd8795d36e236&ID=71&ContentTypeID=0x01002E73C7EC7A4F4844A71AB61F1DDCB10E",
+    "{Name}": "GP. Hököpinge. Skyltar.",
+    "{FilenameWithExtension}": "GP. Hököpinge. Skyltar.",
+    "{Path}": "Lists/TA  Tillggsarbeten/",
+    "{FullPath}": "Lists/TA  Tillggsarbeten/71_.000",
+    "{ContentType}": {
+        "@odata.type": "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedContentType",
+        "Id": "0x01002E73C7EC7A4F4844A71AB61F1DDCB10E",
+        "Name": "Item"
+    },
+    "{ContentType}#Id": "0x01002E73C7EC7A4F4844A71AB61F1DDCB10E",
+    "{HasAttachments}": true,
+    "{VersionNumber}": "6.0"
+}

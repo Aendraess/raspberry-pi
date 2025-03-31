@@ -27,8 +27,13 @@ func (uc *BloodPressureController) RegisterRoutes(app fiber.Router) {
 func (uc *BloodPressureController) GetBloodPressureReports(c *fiber.Ctx) error {
 	var BloodPressureReports []models.BloodPressure
 
-	database.DB.Find(&BloodPressureReports)
-	return c.JSON(BloodPressureReports)
+	result := database.DB.Find(&BloodPressureReports)
+	if result.Error != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to get blood pressure records",
+		})
+	}
+	return c.JSON(result.RowsAffected)
 }
 
 // @Summary Create a new Blood Pressure report
@@ -53,7 +58,13 @@ func (uc *BloodPressureController) CreateBloodPressure(c *fiber.Ctx) error {
 		Pulse: BloodPressureReport.Pulse,
 		Medicine: BloodPressureReport.Medicine,
 	}
-	database.DB.Create(&BloodPressure)
+	
+	result := database.DB.Create(&BloodPressure)
+	if result.Error != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to create blood pressure record",
+		})
+	}
 
-	return c.JSON(BloodPressure)
+	return c.Status(fiber.StatusCreated).JSON(BloodPressure)
 }

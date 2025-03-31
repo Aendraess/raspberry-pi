@@ -17,7 +17,6 @@ func (mc *MarketItemController) RegisterRoutes(app fiber.Router) {
 	group.Get("/", mc.GetMarketItems)
 	group.Delete("/", mc.DeleteMarketItem)
 	group.Put("/", mc.UpdateMarketItem)
-
 }
 
 // @Summary Get a list of market items
