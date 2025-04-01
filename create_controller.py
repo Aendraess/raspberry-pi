@@ -4,9 +4,10 @@ import re
 import tkinter as tk
 from tkinter import ttk, messagebox
 from typing import List, Optional
-
+TESTING = True
 TEMPLATE_FOLDER = os.path.join(os.path.dirname(__file__),'template')
 CONTROLLER_FOLDER = os.path.join(os.path.dirname(__file__),'controllers')
+DTO_FOLDER = os.path.join(os.path.dirname(__file__),'dtos')
 MODELS_FOLDER = os.path.join(os.path.dirname(__file__),'models')
 SERVICES_FOLDER = os.path.join(os.path.dirname(__file__),'services')
 DATABASE_MIGRATIONS_FILE = os.path.join(os.path.dirname(__file__),'database','dbMigrations.go')
@@ -17,7 +18,7 @@ UPDATE_DTO_TEMPLATE = os.path.join(TEMPLATE_FOLDER, 'updateDto.txt')
 MODEL_TEMPLATE = os.path.join(TEMPLATE_FOLDER, 'model.txt')
 SERVICE_TEMPLATE = os.path.join(TEMPLATE_FOLDER, 'service.txt')
 OUT_DIR = os.path.join(os.path.dirname(__file__),'out')
-TESTING = True
+
 def decapitalize_first_letter(name: str) -> str:
         return name[0].lower() + name[1:]
     
@@ -32,7 +33,7 @@ class InputField:
         assert self.type in ["int", "float32", "string", "uint", "bool", *[model for model in self.existing_models]]
         
         assert re.match(r'^[A-Za-z][A-Za-z0-9_]*$', self.name)
-        assert self.name.lower() not in ["id", "createdat", "updatedat", "deletedat", "basemodel"]
+        assert self.name.lower() not in ["createdat", "updatedat", "deletedat", "basemodel"]
         assert self.name.lower() not in ["int", "float32", "string", "uint", "bool"]
         
         
@@ -82,7 +83,7 @@ class ControllerCreator:
     def add_field(self, name: str, type: str) -> None:
         field = InputField(name, type, self.existing_models)
         assert not any(f.name == name for f in self.fields), f"Field name {name} already exists"
-        assert field.name.lower() not in ["id", "createdat", "updatedat", "deletedat", "basemodel"], f"Field name {name} is reserved"
+        assert field.name.lower() not in ["createdat", "updatedat", "deletedat", "basemodel"], f"Field name {name} is reserved"
         self.fields.append(field)
         if field.type in self.existing_models:
             assert f"{decapitalize_first_letter(field.type)}Id" not in [field.name for field in self.fields], f"Field name {name} is reserved"
@@ -115,7 +116,7 @@ class ControllerCreator:
         self._update_server()
     
     def _generate_controller(self, template: str) -> None:
-        # Implementation for controller generation
+        
         controller_name = f"{self.model_name}Controller"
         controller_file = os.path.join(CONTROLLER_FOLDER, f"{controller_name}.go")
         assert not os.path.exists(controller_file), f"Controller file already exists at {controller_file}"
@@ -123,8 +124,25 @@ class ControllerCreator:
         pass
     
     def _generate_dtos(self, create_template: str, update_template: str) -> None:
-        # Implementation for DTO generation
+        CreateDtoName = f"Create{self.model_name}Request"
+        UpdateDtoName = f"Update{self.model_name}Request"
+        assert create_template != None and create_template != ""
+        assert update_template != None and update_template != ""
+        longest_field_name = len(max(self.fields, key=lambda x: len(x.name)).name)
+        longest_field_type = len(max(self.fields, key=lambda x: len(self.convert_type(x.type))).type)    
+        create_template = create_template.replace("[UpdateDto]",UpdateDtoName)
+        create_template = create_template.replace("    [Fields]",'\n'.join(["    "+str(field.name).ljust(longest_field_name) + f"   {self.convert_type(field.type).ljust(longest_field_type)}   {field.json}" for field in self.fields]))
+        
+        
+        update_template = update_template.replace("[UpdateDto]",UpdateDtoName)
+        update_template = update_template.replace("    [Fields]",'\n'.join(["    "+str(field.name).ljust(longest_field_name) + f"   {self.convert_type(field.type).ljust(longest_field_type)}   {field.json}" for field in self.fields]))
+        
+        updatepath = os.path.join(DTO_FOLDER if TESTING else TEMPLATE_FOLDER,f"{UpdateDtoName}.go")
+        createpath = os.path.join(DTO_FOLDER  if TESTING else TEMPLATE_FOLDER,f"{CreateDtoName}.go")
+        with open(updatepath,'w', encoding='utf-8') as f:
+            f.write(update_template)
         pass
+    
     def convert_type(self, type: str) -> str:
         if type == "int":
             return "int"
@@ -138,8 +156,6 @@ class ControllerCreator:
             return "uint"
         else:
             return type
-        
-    
     
     def _generate_model(self, template: str) -> None:
         # Implementation for model generation

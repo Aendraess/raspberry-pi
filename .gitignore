@@ -11,3 +11,5 @@ erpi2.pub
 main.exe
 api.exe
 .env.development
+/template/**/*
+/out/**/*
