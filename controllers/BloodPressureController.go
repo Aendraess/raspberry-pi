@@ -33,7 +33,8 @@ func (uc *BloodPressureController) GetBloodPressureReports(c *fiber.Ctx) error {
 			"error": "Failed to get blood pressure records",
 		})
 	}
-	return c.JSON(result.RowsAffected)
+
+	return c.JSON(BloodPressureReports)
 }
 
 // @Summary Create a new Blood Pressure report
