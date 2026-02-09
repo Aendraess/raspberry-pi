@@ -3,11 +3,15 @@ package server
 import (
 	"api/controllers"
 	"api/database"
+	"api/mcpServer"
+	"api/services"
 	"log"
 	"os"
 
+	"github.com/gofiber/adaptor/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	mcp "github.com/mark3labs/mcp-go/server"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
 )
 
@@ -39,8 +43,12 @@ func InitalizeServer() {
 		AllowOrigins: "*", // Allows all origins
 	}))
 	database.InitDB()
+	mcpSrv := mcpServer.NewServer()
+	mcpHTTP := mcp.NewStreamableHTTPServer(mcpSrv, mcp.WithEndpointPath("/mcp"))
+	App.All("/mcp/*", adaptor.HTTPHandler(mcpHTTP))
 	Api = App.Group("/api")
-	SetupRoutes(&Api)
+	chatService := services.NewChatService(mcpSrv)
+	SetupRoutes(&Api, chatService)
 	// Serve Swagger UI
 	App.Get("/swagger/*", fiberSwagger.WrapHandler)
 	log.Println("Registered Routes:")
@@ -54,13 +62,14 @@ func InitalizeServer() {
 }
 
 // SetupRoutes automatically registers controllers
-func SetupRoutes(app *fiber.Router) {
+func SetupRoutes(app *fiber.Router, chatService *services.ChatService) {
 	controllersList := []controllers.Controller{
 		&controllers.UserController{},
 		&controllers.CategoryController{},
 		&controllers.MarketItemController{},
 		&controllers.ApiKeyController{},
 		&controllers.BloodPressureController{},
+		controllers.NewChatController(chatService),
 	}
 
 	for _, controller := range controllersList {

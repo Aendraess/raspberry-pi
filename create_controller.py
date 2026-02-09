@@ -27,7 +27,8 @@ class InputField:
         self.name = name
         self.type = type
         self.existing_models = existing_models
-        self.json = f"""`json:\"{decapitalize_first_letter(self.name)}{",  gorm:\"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;\"" if self.type in self.existing_models else ""}\"`"""
+        gorm_constraint = ",  gorm:\"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;\"" if self.type in self.existing_models else ""
+        self.json = f"""`json:"{decapitalize_first_letter(self.name)}{gorm_constraint}"`"""
         print(*self.existing_models)
         print(["int", "float32", "string", "uint", "bool", *[model for model in self.existing_models]], self.name, self.type)
         assert self.type in ["int", "float32", "string", "uint", "bool", *[model for model in self.existing_models]]
@@ -283,10 +284,9 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    c = ControllerCreator("NewModel")
-    c.add_field("name", "string")
-    c.add_field("price", "float32")
-    c.add_field("quantity", "uint")
-    c.add_field("is_active", "bool")
-    c.add_field("user", "User")
+    c = ControllerCreator("LogbookEntry")
+    c.add_field("message", "string")
+    c.add_field("level", "string")
+    c.add_field("category", "string")
+    c.add_field("timestamp", "time.Time")
     c.generate()

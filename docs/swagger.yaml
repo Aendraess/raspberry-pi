@@ -1,9 +1,251 @@
 definitions:
+  dtos.AddMessageRequest:
+    properties:
+      message:
+        type: string
+    type: object
+  dtos.AddMessageResponse:
+    properties:
+      reply:
+        type: string
+    type: object
+  dtos.ChatMessageResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      role:
+        type: string
+    type: object
+  dtos.ChatRequest:
+    properties:
+      message:
+        type: string
+    type: object
+  dtos.ChatThreadResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      messages:
+        items:
+          $ref: '#/definitions/dtos.ChatMessageResponse'
+        type: array
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dtos.CreateApiKeyRequest:
+    properties:
+      api_key:
+        type: string
+      api_type:
+        type: string
+      client_id:
+        type: string
+      client_secret:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  dtos.CreateBloodPressure:
+    properties:
+      diastolic:
+        type: integer
+      medicine:
+        type: string
+      pulse:
+        type: integer
+      systolic:
+        type: integer
+    type: object
+  dtos.CreateCategory:
+    properties:
+      title:
+        type: string
+    type: object
+  dtos.CreateLogBookEntryRequest:
+    properties:
+      category:
+        type: string
+      level:
+        type: string
+      message:
+        type: string
+    type: object
+  dtos.CreateMarketItemRequest:
+    properties:
+      categoryId:
+        type: integer
+      description:
+        type: string
+      price:
+        type: number
+      title:
+        type: string
+      userId:
+        type: integer
+    type: object
+  dtos.CreateThreadRequest:
+    properties:
+      title:
+        type: string
+    type: object
+  dtos.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
+  dtos.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
+  dtos.UserResponse:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
+  models.ApiKey:
+    properties:
+      api_key:
+        type: string
+      api_type:
+        type: string
+      client_id:
+        type: string
+      client_secret:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: integer
+    type: object
+  models.BloodPressure:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      diastolic:
+        type: integer
+      id:
+        type: integer
+      medicine:
+        type: string
+      pulse:
+        type: integer
+      systolic:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  models.Category:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.LogBookEntry:
+    properties:
+      category:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      level:
+        type: string
+      message:
+        type: string
+      timestamp:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.MarketItem:
+    properties:
+      category:
+        $ref: '#/definitions/models.Category'
+      categoryId:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      price:
+        type: number
+      title:
+        type: string
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      userId:
+        type: integer
+    type: object
+  models.ModelUpdates:
+    properties:
+      action:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      model_name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
   models.User:
     properties:
       createdAt:
         type: string
       deletedAt:
+        type: string
+      email:
         type: string
       id:
         type: integer
@@ -17,7 +259,372 @@ definitions:
 info:
   contact: {}
 paths:
-  /users:
+  /api/api_key:
+    get:
+      description: Get a list of all ApiKeys
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ApiKey'
+            type: array
+      summary: Get a list of ApiKeys
+      tags:
+      - ApiKey
+    post:
+      consumes:
+      - application/json
+      description: Create a new API key
+      parameters:
+      - description: ApiKey object
+        in: body
+        name: api_key
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateApiKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiKey'
+      summary: Create a new API KEY
+      tags:
+      - ApiKey
+  /api/api_key/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing APi key by ID
+      parameters:
+      - description: API Key ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated user object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateApiKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiKey'
+      summary: Update an API key
+      tags:
+      - ApiKey
+  /api/blood_pressure:
+    get:
+      description: Get a list of all blood pressure recordings
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.BloodPressure'
+            type: array
+      summary: Get a list of blood pressures
+      tags:
+      - BloodPressure
+    post:
+      consumes:
+      - application/json
+      description: Create a new Blood Pressure report
+      parameters:
+      - description: BloodPressure object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateBloodPressure'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.BloodPressure'
+      summary: Create a new Blood Pressure report
+      tags:
+      - BloodPressure
+  /api/category:
+    get:
+      description: Get a list of all market categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Category'
+            type: array
+      summary: Get a list of market categories
+      tags:
+      - Category
+    post:
+      consumes:
+      - application/json
+      description: Create a new market Category
+      parameters:
+      - description: MarketCategory object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateCategory'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Category'
+      summary: Create a new market Category
+      tags:
+      - Category
+  /api/chat:
+    post:
+      consumes:
+      - application/json
+      description: Sends a message to OpenAI with MCP tools; no thread history.
+      parameters:
+      - description: Chat message
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ChatRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: reply
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Chat with LLM using MCP tools (single turn)
+      tags:
+      - Chat
+  /api/chat/threads:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ChatThreadResponse'
+            type: array
+      summary: List chat threads
+      tags:
+      - Chat
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Optional title
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateThreadRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.ChatThreadResponse'
+      summary: Create a chat thread
+      tags:
+      - Chat
+  /api/chat/threads/{id}:
+    get:
+      parameters:
+      - description: Thread ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ChatThreadResponse'
+      summary: Get a chat thread with messages
+      tags:
+      - Chat
+  /api/chat/threads/{id}/messages:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Thread ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Message
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.AddMessageRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.AddMessageResponse'
+      summary: Send a message in a thread and get reply
+      tags:
+      - Chat
+  /api/log_book:
+    get:
+      description: Get a list of all LogBookEntries
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.LogBookEntry'
+            type: array
+      summary: Get a list of LogBookEntries
+      tags:
+      - LogBookEntry
+    post:
+      consumes:
+      - application/json
+      description: Create a new LogBookEntry
+      parameters:
+      - description: LogBookEntry object
+        in: body
+        name: log_book
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateLogBookEntryRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LogBookEntry'
+      summary: Create a new LogBookEntry
+      tags:
+      - LogBookEntry
+  /api/log_book/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a LogBookEntry by ID
+      parameters:
+      - description: LogBookEntry ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.LogBookEntry'
+      summary: Delete a LogBookEntry
+      tags:
+      - LogBookEntry
+  /api/marketItem:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a market item
+      parameters:
+      - description: Market item ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MarketItem'
+      summary: Delete a market item
+      tags:
+      - MarketItem
+    get:
+      description: Get a list of all market items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.MarketItem'
+            type: array
+      summary: Get a list of market items
+      tags:
+      - MarketItem
+    post:
+      consumes:
+      - application/json
+      description: Create a new market item
+      parameters:
+      - description: MarketItem object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateMarketItemRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MarketItem'
+      summary: Create a new market item
+      tags:
+      - MarketItem
+  /api/modelUpdates:
+    get:
+      description: Get a list of all market items
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ModelUpdates'
+            type: array
+      summary: Get Model updates
+      tags:
+      - ModelUpdates
+  /api/users:
     get:
       description: Get a list of all users
       produces:
@@ -30,6 +637,8 @@ paths:
               $ref: '#/definitions/models.User'
             type: array
       summary: Get a list of users
+      tags:
+      - User
     post:
       consumes:
       - application/json
@@ -40,13 +649,42 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/dtos.CreateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/dtos.UserResponse'
       summary: Create a new user
+      tags:
+      - User
+  /api/users/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated user object
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UserResponse'
+      summary: Update a user
+      tags:
+      - User
 swagger: "2.0"
